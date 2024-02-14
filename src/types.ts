@@ -1,279 +1,310 @@
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T,
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never;
+    };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  DateTime: { input: any; output: any; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  DateTime: { input: any; output: any };
 };
 
 export type Avatar = {
-  __typename?: 'Avatar';
-  fileSize: Scalars['Int']['output'];
-  height: Scalars['Int']['output'];
-  url: Scalars['String']['output'];
-  width: Scalars['Int']['output'];
+  __typename?: "Avatar";
+  fileSize?: Maybe<Scalars["Int"]["output"]>;
+  height?: Maybe<Scalars["Int"]["output"]>;
+  url?: Maybe<Scalars["String"]["output"]>;
+  width?: Maybe<Scalars["Int"]["output"]>;
 };
 
-export enum BlockStatus {
-  Blocked = 'blocked'
-}
-
 export enum CurrencyType {
-  Eur = 'EUR',
-  Usd = 'USD'
+  Eur = "EUR",
+  Usd = "USD",
 }
 
 export type ImagePost = {
-  __typename?: 'ImagePost';
-  fileSize: Scalars['Int']['output'];
-  height: Scalars['Int']['output'];
-  url: Scalars['String']['output'];
-  width: Scalars['Int']['output'];
+  __typename?: "ImagePost";
+  createdAt?: Maybe<Scalars["DateTime"]["output"]>;
+  fileSize?: Maybe<Scalars["Int"]["output"]>;
+  height?: Maybe<Scalars["Int"]["output"]>;
+  id?: Maybe<Scalars["Int"]["output"]>;
+  url?: Maybe<Scalars["String"]["output"]>;
+  width?: Maybe<Scalars["Int"]["output"]>;
 };
 
 export type LoginAdmin = {
-  __typename?: 'LoginAdmin';
-  logged: Scalars['Boolean']['output'];
+  __typename?: "LoginAdmin";
+  logged: Scalars["Boolean"]["output"];
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
-  banUser: Scalars['Boolean']['output'];
+  __typename?: "Mutation";
+  banUser: Scalars["Boolean"]["output"];
   loginAdmin: LoginAdmin;
-  removeUser: Scalars['Boolean']['output'];
-  unbanUser: Scalars['Boolean']['output'];
+  removeUser: Scalars["Boolean"]["output"];
+  unbanUser: Scalars["Boolean"]["output"];
 };
-
 
 export type MutationBanUserArgs = {
-  banReason: Scalars['String']['input'];
-  userId: Scalars['Int']['input'];
+  banReason: Scalars["String"]["input"];
+  userId: Scalars["Int"]["input"];
 };
-
 
 export type MutationLoginAdminArgs = {
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  email: Scalars["String"]["input"];
+  password: Scalars["String"]["input"];
 };
-
 
 export type MutationRemoveUserArgs = {
-  userId: Scalars['Int']['input'];
+  userId: Scalars["Int"]["input"];
 };
 
-
 export type MutationUnbanUserArgs = {
-  userId: Scalars['Int']['input'];
+  userId: Scalars["Int"]["input"];
 };
 
 export type PaginationModel = {
-  __typename?: 'PaginationModel';
-  page: Scalars['Int']['output'];
-  pageSize: Scalars['Int']['output'];
-  pagesCount: Scalars['Int']['output'];
-  totalCount: Scalars['Int']['output'];
+  __typename?: "PaginationModel";
+  page: Scalars["Int"]["output"];
+  pageSize: Scalars["Int"]["output"];
+  pagesCount: Scalars["Int"]["output"];
+  totalCount: Scalars["Int"]["output"];
 };
 
 export type Payment = {
-  __typename?: 'Payment';
-  amount: Scalars['Int']['output'];
-  createdAt: Scalars['String']['output'];
-  currency: CurrencyType;
-  id: Scalars['Int']['output'];
-  userId: Scalars['Int']['output'];
+  __typename?: "Payment";
+  amount?: Maybe<Scalars["Int"]["output"]>;
+  createdAt?: Maybe<Scalars["DateTime"]["output"]>;
+  currency?: Maybe<CurrencyType>;
+  endDate?: Maybe<Scalars["DateTime"]["output"]>;
+  id?: Maybe<Scalars["Int"]["output"]>;
+  paymentMethod?: Maybe<PaymentMethod>;
+  type?: Maybe<SubscriptionType>;
+  userId?: Maybe<Scalars["Int"]["output"]>;
 };
 
 export enum PaymentMethod {
-  CreditCard = 'CREDIT_CARD',
-  Paypal = 'PAYPAL',
-  Stripe = 'STRIPE'
+  CreditCard = "CREDIT_CARD",
+  Paypal = "PAYPAL",
+  Stripe = "STRIPE",
 }
 
 export type PaymentPaginationModel = {
-  __typename?: 'PaymentPaginationModel';
+  __typename?: "PaymentPaginationModel";
   items: Array<Subscription>;
-  page: Scalars['Int']['output'];
-  pageSize: Scalars['Int']['output'];
-  pagesCount: Scalars['Int']['output'];
-  totalCount: Scalars['Int']['output'];
+  page: Scalars["Int"]["output"];
+  pageSize: Scalars["Int"]["output"];
+  pagesCount: Scalars["Int"]["output"];
+  totalCount: Scalars["Int"]["output"];
 };
 
 export type PaymentsPaginationModel = {
-  __typename?: 'PaymentsPaginationModel';
+  __typename?: "PaymentsPaginationModel";
   items: Array<SubscriptionPaymentsModel>;
-  page: Scalars['Int']['output'];
-  pageSize: Scalars['Int']['output'];
-  pagesCount: Scalars['Int']['output'];
-  totalCount: Scalars['Int']['output'];
+  page: Scalars["Int"]["output"];
+  pageSize: Scalars["Int"]["output"];
+  pagesCount: Scalars["Int"]["output"];
+  totalCount: Scalars["Int"]["output"];
 };
 
 export type Post = {
-  __typename?: 'Post';
-  createdAt: Scalars['String']['output'];
-  description: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  images: Array<ImagePost>;
-  /** ownerId is the userId */
-  ownerId: Scalars['Int']['output'];
+  __typename?: "Post";
+  createdAt: Scalars["DateTime"]["output"];
+  description: Scalars["String"]["output"];
+  id: Scalars["Int"]["output"];
+  images?: Maybe<Array<ImagePost>>;
+  ownerId: Scalars["Int"]["output"];
+  postOwner: PostOwnerModel;
+  updatedAt: Scalars["DateTime"]["output"];
 };
 
-export type PostImages = {
-  __typename?: 'PostImages';
-  images: Array<ImagePost>;
+export type PostOwnerModel = {
+  __typename?: "PostOwnerModel";
+  avatars?: Maybe<Array<Avatar>>;
+  firstName?: Maybe<Scalars["String"]["output"]>;
+  id: Scalars["Int"]["output"];
+  lastName?: Maybe<Scalars["String"]["output"]>;
+  userName: Scalars["String"]["output"];
+};
+
+export type PostsByUserModel = {
+  __typename?: "PostsByUserModel";
+  items?: Maybe<Array<ImagePost>>;
+  pageSize: Scalars["Int"]["output"];
+  pagesCount: Scalars["Int"]["output"];
+  totalCount: Scalars["Int"]["output"];
 };
 
 export type PostsPaginationModel = {
-  __typename?: 'PostsPaginationModel';
+  __typename?: "PostsPaginationModel";
   items: Array<Post>;
-  pageSize: Scalars['Int']['output'];
-  pagesCount: Scalars['Int']['output'];
-  totalCount: Scalars['Int']['output'];
+  pageSize: Scalars["Int"]["output"];
+  pagesCount: Scalars["Int"]["output"];
+  totalCount: Scalars["Int"]["output"];
 };
 
 export type Profile = {
-  __typename?: 'Profile';
-  aboutMe?: Maybe<Scalars['String']['output']>;
+  __typename?: "Profile";
+  aboutMe?: Maybe<Scalars["String"]["output"]>;
   avatars?: Maybe<Array<Avatar>>;
-  city?: Maybe<Scalars['String']['output']>;
-  createdAt: Scalars['DateTime']['output'];
-  dateOfBirth?: Maybe<Scalars['DateTime']['output']>;
-  firstName?: Maybe<Scalars['String']['output']>;
-  id: Scalars['Int']['output'];
-  lastName?: Maybe<Scalars['String']['output']>;
-  userName?: Maybe<Scalars['String']['output']>;
-};
-
-export type ProfileInfoModel = {
-  __typename?: 'ProfileInfoModel';
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['Int']['output'];
-  posts: Array<PostImages>;
-  profile: Profile;
-  userName: Scalars['String']['output'];
+  city?: Maybe<Scalars["String"]["output"]>;
+  createdAt: Scalars["DateTime"]["output"];
+  dateOfBirth?: Maybe<Scalars["DateTime"]["output"]>;
+  firstName?: Maybe<Scalars["String"]["output"]>;
+  id: Scalars["Int"]["output"];
+  lastName?: Maybe<Scalars["String"]["output"]>;
+  userName?: Maybe<Scalars["String"]["output"]>;
 };
 
 export type Query = {
-  __typename?: 'Query';
-  getAllPayments: PaymentsPaginationModel;
-  getListPaymentsById: PaymentPaginationModel;
+  __typename?: "Query";
+  getPayments: PaymentsPaginationModel;
+  getPaymentsByUser: PaymentPaginationModel;
   getPosts: PostsPaginationModel;
-  getProfileInfo: ProfileInfoModel;
+  getPostsByUser: PostsByUserModel;
+  getUser: UserByIdModel;
   getUsers: UsersPaginationModel;
 };
 
-
-export type QueryGetAllPaymentsArgs = {
-  pageNumber?: InputMaybe<Scalars['Int']['input']>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  sortBy?: InputMaybe<Scalars['String']['input']>;
+export type QueryGetPaymentsArgs = {
+  pageNumber?: InputMaybe<Scalars["Int"]["input"]>;
+  pageSize?: InputMaybe<Scalars["Int"]["input"]>;
+  searchTerm?: InputMaybe<Scalars["String"]["input"]>;
+  sortBy?: InputMaybe<Scalars["String"]["input"]>;
   sortDirection?: InputMaybe<SortDirection>;
 };
 
-
-export type QueryGetListPaymentsByIdArgs = {
-  pageNumber?: InputMaybe<Scalars['Int']['input']>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  sortBy?: InputMaybe<Scalars['String']['input']>;
+export type QueryGetPaymentsByUserArgs = {
+  pageNumber?: InputMaybe<Scalars["Int"]["input"]>;
+  pageSize?: InputMaybe<Scalars["Int"]["input"]>;
+  sortBy?: InputMaybe<Scalars["String"]["input"]>;
   sortDirection?: InputMaybe<SortDirection>;
-  userId: Scalars['Int']['input'];
+  userId: Scalars["Int"]["input"];
 };
-
 
 export type QueryGetPostsArgs = {
-  endCursorPostId?: InputMaybe<Scalars['Int']['input']>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  searchTerm?: InputMaybe<Scalars['String']['input']>;
-  sortBy?: InputMaybe<Scalars['String']['input']>;
+  endCursorPostId?: InputMaybe<Scalars["Int"]["input"]>;
+  pageSize?: InputMaybe<Scalars["Int"]["input"]>;
+  searchTerm?: InputMaybe<Scalars["String"]["input"]>;
+  sortBy?: InputMaybe<Scalars["String"]["input"]>;
   sortDirection?: InputMaybe<SortDirection>;
 };
 
-
-export type QueryGetProfileInfoArgs = {
-  userId: Scalars['Int']['input'];
+export type QueryGetPostsByUserArgs = {
+  endCursorId?: InputMaybe<Scalars["Int"]["input"]>;
+  userId: Scalars["Int"]["input"];
 };
 
+export type QueryGetUserArgs = {
+  userId: Scalars["Int"]["input"];
+};
 
 export type QueryGetUsersArgs = {
-  blockStatus?: InputMaybe<BlockStatus>;
-  pageNumber?: InputMaybe<Scalars['Int']['input']>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  searchTerm?: InputMaybe<Scalars['String']['input']>;
-  sortBy?: InputMaybe<Scalars['String']['input']>;
+  pageNumber?: InputMaybe<Scalars["Int"]["input"]>;
+  pageSize?: InputMaybe<Scalars["Int"]["input"]>;
+  searchTerm?: InputMaybe<Scalars["String"]["input"]>;
+  sortBy?: InputMaybe<Scalars["String"]["input"]>;
   sortDirection?: InputMaybe<SortDirection>;
+  statusFilter?: InputMaybe<UserBlockStatus>;
 };
 
 export enum SortDirection {
-  Asc = 'asc',
-  Desc = 'desc'
+  Asc = "asc",
+  Desc = "desc",
 }
 
 export enum StatusSubscriptionType {
-  Active = 'ACTIVE',
-  Deleted = 'DELETED',
-  Finished = 'FINISHED',
-  Pending = 'PENDING'
+  Active = "ACTIVE",
+  Deleted = "DELETED",
+  Finished = "FINISHED",
+  Pending = "PENDING",
 }
 
 export type Subscription = {
-  __typename?: 'Subscription';
-  businessAccountId: Scalars['Int']['output'];
-  dateOfPayment?: Maybe<Scalars['DateTime']['output']>;
-  endDate?: Maybe<Scalars['DateTime']['output']>;
-  id: Scalars['String']['output'];
+  __typename?: "Subscription";
+  businessAccountId: Scalars["Int"]["output"];
+  dateOfPayment?: Maybe<Scalars["DateTime"]["output"]>;
+  endDate?: Maybe<Scalars["DateTime"]["output"]>;
+  id: Scalars["String"]["output"];
   paymentType?: Maybe<PaymentMethod>;
   payments: Array<Payment>;
-  price: Scalars['Int']['output'];
-  startDate?: Maybe<Scalars['DateTime']['output']>;
+  price: Scalars["Int"]["output"];
+  startDate?: Maybe<Scalars["DateTime"]["output"]>;
   status: StatusSubscriptionType;
   type: SubscriptionType;
 };
 
 export type SubscriptionPaymentsModel = {
-  __typename?: 'SubscriptionPaymentsModel';
-  amount: Scalars['Int']['output'];
+  __typename?: "SubscriptionPaymentsModel";
+  amount?: Maybe<Scalars["Int"]["output"]>;
   avatars?: Maybe<Array<Avatar>>;
-  createdAt: Scalars['String']['output'];
-  currency: CurrencyType;
-  id: Scalars['Int']['output'];
+  createdAt?: Maybe<Scalars["DateTime"]["output"]>;
+  currency?: Maybe<CurrencyType>;
+  endDate?: Maybe<Scalars["DateTime"]["output"]>;
+  id?: Maybe<Scalars["Int"]["output"]>;
   paymentMethod: PaymentMethod;
   type: SubscriptionType;
-  userId: Scalars['Int']['output'];
-  userName: Scalars['String']['output'];
+  userId?: Maybe<Scalars["Int"]["output"]>;
+  userName: Scalars["String"]["output"];
 };
 
 export enum SubscriptionType {
-  Day = 'DAY',
-  Monthly = 'MONTHLY',
-  Weekly = 'WEEKLY'
+  Day = "DAY",
+  Monthly = "MONTHLY",
+  Weekly = "WEEKLY",
 }
 
 export type User = {
-  __typename?: 'User';
-  createdAt: Scalars['DateTime']['output'];
-  email: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
+  __typename?: "User";
+  createdAt: Scalars["DateTime"]["output"];
+  email: Scalars["String"]["output"];
+  id: Scalars["Int"]["output"];
   profile: Profile;
   userBan?: Maybe<UserBan>;
-  userName: Scalars['String']['output'];
+  userName: Scalars["String"]["output"];
 };
 
 export type UserBan = {
-  __typename?: 'UserBan';
-  createdAt: Scalars['DateTime']['output'];
-  reason: Scalars['String']['output'];
+  __typename?: "UserBan";
+  createdAt: Scalars["DateTime"]["output"];
+  reason: Scalars["String"]["output"];
+};
+
+export enum UserBlockStatus {
+  All = "ALL",
+  Blocked = "BLOCKED",
+}
+
+export type UserByIdModel = {
+  __typename?: "UserByIdModel";
+  createdAt: Scalars["DateTime"]["output"];
+  email: Scalars["String"]["output"];
+  id: Scalars["Int"]["output"];
+  profile: Profile;
+  userName: Scalars["String"]["output"];
 };
 
 export type UsersPaginationModel = {
-  __typename?: 'UsersPaginationModel';
+  __typename?: "UsersPaginationModel";
   pagination: PaginationModel;
   users: Array<User>;
 };

@@ -3,8 +3,8 @@
   min-width: 378px;
   max-width: 378px;
   padding: 24px;
+  background-color: var(--dark-500);
 
-  background: var(--dark-500);
   border: 1px solid var(--dark-300);
   border-radius: 2px;
 }
@@ -30,8 +30,6 @@
   display: inline-flex;
   padding-bottom: 24px;
   color: var(--light-900) !important;
-
-  // justify-content: flex-end;
 }
 
 .submitBtn {

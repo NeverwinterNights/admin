@@ -1,1 +1,1 @@
-export { HeadMeta } from './head-meta'
+export { HeadMeta } from "./head-meta";

@@ -1,0 +1,22 @@
+.root {
+  max-width: 972px;
+  width: 100%;
+  padding-top: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  color: var(--light-100);
+  transition: all 0.3s ease 0s;
+
+  &:hover {
+    color: var(--light-900);
+  }
+}
+
+.backIcon {
+  &:hover {
+    color: var(--light-900);
+  }
+}

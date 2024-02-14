@@ -1,14 +1,14 @@
 import { gql } from "@apollo/client";
 
-export const GET_LIST_PAYMENTS_BY_ID = gql`
-  query GetListPaymentsById(
+export const GET_PAYMENTS_BY_USER = gql`
+  query GetPaymentsByUser(
     $userId: Int!
     $pageSize: Int
     $pageNumber: Int
     $sortBy: String
     $sortDirection: SortDirection
   ) {
-    getListPaymentsById(
+    getPaymentsByUser(
       userId: $userId
       sortBy: $sortBy
       sortDirection: $sortDirection
@@ -20,18 +20,20 @@ export const GET_LIST_PAYMENTS_BY_ID = gql`
   }
 `;
 
-export const GET_ALL_PAYMENTS = gql`
-  query GetAllPayments(
+export const GET_PAYMENTS = gql`
+  query GetPayments(
     $pageSize: Int
     $pageNumber: Int
     $sortBy: String
     $sortDirection: SortDirection
+    $searchTerm: String
   ) {
-    getAllPayments(
+    getPayments(
       pageSize: $pageSize
       pageNumber: $pageNumber
       sortBy: $sortBy
       sortDirection: $sortDirection
+      searchTerm: $searchTerm
     ) {
       pageSize
     }
