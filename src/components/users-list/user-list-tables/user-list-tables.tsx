@@ -36,6 +36,8 @@ export const UserListTables = memo(
     ];
     const { sort, setSort } = useGetUsersListData(t);
 
+    console.log("value");
+
     return (
       <Table className={s.table}>
         <TableHeader onSort={setSort} sort={sort} columns={headers} />
