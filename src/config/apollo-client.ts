@@ -1,13 +1,13 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-
-import { tokenGetterToLocalStorage } from "@/helpers/token-getter-to-local-storage";
+import { tokenGetterToSessionStorage } from "@/helpers";
 
 const httpLink = createHttpLink({
-  uri: "https://inctagram.work/api/v1/graphql",
+  // uri: "https://inctagram.work/api/v1/graphql",
+  uri: process.env.NEXT_PUBLIC_GRAPH_QL_LINK,
 });
 const authLink = setContext((_, { headers }) => {
-  const token = tokenGetterToLocalStorage();
+  const token = tokenGetterToSessionStorage();
 
   return {
     headers: {
