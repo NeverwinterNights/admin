@@ -1,52 +1,62 @@
-import * as Types from "../types";
+import * as Types from '../types';
 
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
-
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-
 export type GetPostsQueryVariables = Types.Exact<{
-  searchTerm?: Types.InputMaybe<Types.Scalars["String"]["input"]>;
-  pageSize?: Types.InputMaybe<Types.Scalars["Int"]["input"]>;
-  sortBy?: Types.InputMaybe<Types.Scalars["String"]["input"]>;
+  searchTerm?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  sortBy?: Types.InputMaybe<Types.Scalars['String']['input']>;
   sortDirection?: Types.InputMaybe<Types.SortDirection>;
-  endCursorPostId?: Types.InputMaybe<Types.Scalars["Int"]["input"]>;
+  endCursorPostId?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
-export type GetPostsQuery = {
-  __typename?: "Query";
-  getPosts: { __typename?: "PostsPaginationModel"; pageSize: number };
-};
+
+export type GetPostsQuery = { __typename?: 'Query', getPosts: { __typename?: 'PostsPaginationModel', pageSize: number, totalCount: number, pagesCount: number, items: Array<{ __typename?: 'Post', id: number, createdAt: any, description: string, images?: Array<{ __typename?: 'ImagePost', url?: string | null, height?: number | null, fileSize?: number | null, width?: number | null, id?: number | null }> | null, postOwner: { __typename?: 'PostOwnerModel', id: number, userName: string, avatars?: Array<{ __typename?: 'Avatar', url?: string | null }> | null } }> } };
 
 export type GetPostsByUserQueryVariables = Types.Exact<{
-  userId: Types.Scalars["Int"]["input"];
-  endCursorId?: Types.InputMaybe<Types.Scalars["Int"]["input"]>;
+  userId: Types.Scalars['Int']['input'];
+  endCursorId?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
-export type GetPostsByUserQuery = {
-  __typename?: "Query";
-  getPostsByUser: { __typename?: "PostsByUserModel"; pageSize: number };
-};
+
+export type GetPostsByUserQuery = { __typename?: 'Query', getPostsByUser: { __typename?: 'PostsByUserModel', pageSize: number, pagesCount: number, totalCount: number, items?: Array<{ __typename?: 'ImagePost', url?: string | null, id?: number | null }> | null } };
+
 
 export const GetPostsDocument = gql`
-  query GetPosts(
-    $searchTerm: String
-    $pageSize: Int
-    $sortBy: String
-    $sortDirection: SortDirection
-    $endCursorPostId: Int
+    query GetPosts($searchTerm: String, $pageSize: Int, $sortBy: String, $sortDirection: SortDirection, $endCursorPostId: Int) {
+  getPosts(
+    searchTerm: $searchTerm
+    pageSize: $pageSize
+    sortBy: $sortBy
+    sortDirection: $sortDirection
+    endCursorPostId: $endCursorPostId
   ) {
-    getPosts(
-      searchTerm: $searchTerm
-      pageSize: $pageSize
-      sortBy: $sortBy
-      sortDirection: $sortDirection
-      endCursorPostId: $endCursorPostId
-    ) {
-      pageSize
+    pageSize
+    totalCount
+    pagesCount
+    items {
+      id
+      createdAt
+      description
+      images {
+        url
+        height
+        fileSize
+        width
+        id
+      }
+      postOwner {
+        id
+        avatars {
+          url
+        }
+        userName
+      }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useGetPostsQuery__
@@ -68,63 +78,36 @@ export const GetPostsDocument = gql`
  *   },
  * });
  */
-export function useGetPostsQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useQuery<GetPostsQuery, GetPostsQueryVariables>(
-    GetPostsDocument,
-    options,
-  );
-}
-
-export function useGetPostsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetPostsQuery,
-    GetPostsQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useLazyQuery<GetPostsQuery, GetPostsQueryVariables>(
-    GetPostsDocument,
-    options,
-  );
-}
-
-export function useGetPostsSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    GetPostsQuery,
-    GetPostsQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useSuspenseQuery<GetPostsQuery, GetPostsQueryVariables>(
-    GetPostsDocument,
-    options,
-  );
-}
-
+export function useGetPostsQuery(baseOptions?: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
+      }
+export function useGetPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
+        }
+export function useGetPostsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
+        }
 export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
-export type GetPostsLazyQueryHookResult = ReturnType<
-  typeof useGetPostsLazyQuery
->;
-export type GetPostsSuspenseQueryHookResult = ReturnType<
-  typeof useGetPostsSuspenseQuery
->;
-export type GetPostsQueryResult = Apollo.QueryResult<
-  GetPostsQuery,
-  GetPostsQueryVariables
->;
+export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
+export type GetPostsSuspenseQueryHookResult = ReturnType<typeof useGetPostsSuspenseQuery>;
+export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>;
 export const GetPostsByUserDocument = gql`
-  query GetPostsByUser($userId: Int!, $endCursorId: Int) {
-    getPostsByUser(userId: $userId, endCursorId: $endCursorId) {
-      pageSize
+    query GetPostsByUser($userId: Int!, $endCursorId: Int) {
+  getPostsByUser(userId: $userId, endCursorId: $endCursorId) {
+    pageSize
+    pagesCount
+    pageSize
+    totalCount
+    items {
+      url
+      id
     }
   }
-`;
+}
+    `;
 
 /**
  * __useGetPostsByUserQuery__
@@ -143,58 +126,19 @@ export const GetPostsByUserDocument = gql`
  *   },
  * });
  */
-export function useGetPostsByUserQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetPostsByUserQuery,
-    GetPostsByUserQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useQuery<GetPostsByUserQuery, GetPostsByUserQueryVariables>(
-    GetPostsByUserDocument,
-    options,
-  );
-}
-
-export function useGetPostsByUserLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetPostsByUserQuery,
-    GetPostsByUserQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useLazyQuery<GetPostsByUserQuery, GetPostsByUserQueryVariables>(
-    GetPostsByUserDocument,
-    options,
-  );
-}
-
-export function useGetPostsByUserSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    GetPostsByUserQuery,
-    GetPostsByUserQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useSuspenseQuery<
-    GetPostsByUserQuery,
-    GetPostsByUserQueryVariables
-  >(GetPostsByUserDocument, options);
-}
-
-export type GetPostsByUserQueryHookResult = ReturnType<
-  typeof useGetPostsByUserQuery
->;
-export type GetPostsByUserLazyQueryHookResult = ReturnType<
-  typeof useGetPostsByUserLazyQuery
->;
-export type GetPostsByUserSuspenseQueryHookResult = ReturnType<
-  typeof useGetPostsByUserSuspenseQuery
->;
-export type GetPostsByUserQueryResult = Apollo.QueryResult<
-  GetPostsByUserQuery,
-  GetPostsByUserQueryVariables
->;
+export function useGetPostsByUserQuery(baseOptions: Apollo.QueryHookOptions<GetPostsByUserQuery, GetPostsByUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPostsByUserQuery, GetPostsByUserQueryVariables>(GetPostsByUserDocument, options);
+      }
+export function useGetPostsByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostsByUserQuery, GetPostsByUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPostsByUserQuery, GetPostsByUserQueryVariables>(GetPostsByUserDocument, options);
+        }
+export function useGetPostsByUserSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPostsByUserQuery, GetPostsByUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPostsByUserQuery, GetPostsByUserQueryVariables>(GetPostsByUserDocument, options);
+        }
+export type GetPostsByUserQueryHookResult = ReturnType<typeof useGetPostsByUserQuery>;
+export type GetPostsByUserLazyQueryHookResult = ReturnType<typeof useGetPostsByUserLazyQuery>;
+export type GetPostsByUserSuspenseQueryHookResult = ReturnType<typeof useGetPostsByUserSuspenseQuery>;
+export type GetPostsByUserQueryResult = Apollo.QueryResult<GetPostsByUserQuery, GetPostsByUserQueryVariables>;

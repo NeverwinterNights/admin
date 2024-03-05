@@ -18,6 +18,9 @@ const config: CodegenConfig = {
       },
     },
   },
+  // hooks: {
+  //   afterAllFileWrite: `node -p "const { execSync } = require('child_process'); const generatedFilePaths = process.argv.slice(1).map((generatedFilePath) => generatedFilePath.replaceAll(String.fromCharCode(92), '')); execSync('pnpm eslint --fix ' + generatedFilePaths.join(' '));"`,
+  // },
 };
 
 export default config;

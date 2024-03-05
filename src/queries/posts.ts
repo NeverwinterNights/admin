@@ -16,6 +16,27 @@ export const GET_POSTS = gql`
       endCursorPostId: $endCursorPostId
     ) {
       pageSize
+      totalCount
+      pagesCount
+      items {
+        id
+        createdAt
+        description
+        images {
+          url
+          height
+          fileSize
+          width
+          id
+        }
+        postOwner {
+          id
+          avatars {
+            url
+          }
+          userName
+        }
+      }
     }
   }
 `;
@@ -24,6 +45,13 @@ export const GET_POSTS_BY_USER = gql`
   query GetPostsByUser($userId: Int!, $endCursorId: Int) {
     getPostsByUser(userId: $userId, endCursorId: $endCursorId) {
       pageSize
+      pagesCount
+      pageSize
+      totalCount
+      items {
+        url
+        id
+      }
     }
   }
 `;

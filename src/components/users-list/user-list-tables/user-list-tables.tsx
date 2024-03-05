@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import s from "./user-list-tables.module.scss";
 import {
   Column,
+  Sort,
   Table,
   TableBody,
   TableCell,
@@ -12,31 +13,35 @@ import { BanIcon } from "@/assets/icons";
 import { ActionOptions, DropdownMenu, Typography } from "@/components";
 import { format } from "date-fns";
 import { PATH } from "@/consts/route-paths";
-import { LocaleType } from "locales/ru";
 import { useRouter } from "next/router";
 import { User } from "@/types";
-import { useGetUsersListData, useTranslation } from "@/hooks";
+import { useTranslation } from "@/hooks";
 
 type Props = {
   users: Omit<User, "profile" | "email">[];
-  banOpenModalHandler: (name: string, id: number) => void;
+  banOpenModalHandler: (name: string, id: number, ban?: boolean) => void;
   deleteOpenModalHandler: (name: string, id: number) => void;
+  sort: Sort;
+  setSort: React.Dispatch<React.SetStateAction<Sort>>;
 };
 
 export const UserListTables = memo(
-  ({ users, banOpenModalHandler, deleteOpenModalHandler }: Props) => {
+  ({
+    users,
+    banOpenModalHandler,
+    deleteOpenModalHandler,
+    setSort,
+    sort,
+  }: Props) => {
     const { push } = useRouter();
     const { t } = useTranslation();
     const headers: Column[] = [
       { title: t.userList.userID, key: "0", sortable: false },
-      { title: t.userList.username, key: "1", sortable: true },
+      { title: t.userList.username, key: "userName", sortable: true },
       { title: t.userList.profileLink, key: "2", sortable: false },
-      { title: t.userList.dateAdded, key: "3", sortable: true },
+      { title: t.userList.dateAdded, key: "createdAt", sortable: true },
       { title: "", key: "4" },
     ];
-    const { sort, setSort } = useGetUsersListData(t);
-
-    console.log("value");
 
     return (
       <Table className={s.table}>
@@ -65,7 +70,7 @@ export const UserListTables = memo(
                   <Typography
                     className={s.link}
                     as="a"
-                    href={`${process.env.NEXT_PUBLIC_LINK}${item.id}`}
+                    href={`${process.env.NEXT_PUBLIC_LINK}/profile?id=${item.id}`}
                     variant="regular_link"
                   >
                     {item.userName}
@@ -77,10 +82,17 @@ export const UserListTables = memo(
                 <TableCell>
                   <DropdownMenu className={s.dropdown} sideOffset={-5}>
                     <ActionOptions
+                      ban={item.userBan}
                       handleBanMode={() =>
-                        banOpenModalHandler(item.userName, item.id)
+                        banOpenModalHandler(
+                          item.userName,
+                          item.id,
+                          !!item.userBan,
+                        )
                       }
-                      handleOpenMoreMode={() => push(PATH.USER)}
+                      handleOpenMoreMode={() =>
+                        push(`${PATH.USER}/?id=${item.id}`)
+                      }
                       handleDeleteMode={() =>
                         deleteOpenModalHandler(item.userName, item.id)
                       }

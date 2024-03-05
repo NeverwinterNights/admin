@@ -1,7 +1,7 @@
 import * as Types from "../types";
 
-import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
+import { gql } from "@apollo/client";
 
 const defaultOptions = {} as const;
 
@@ -18,6 +18,16 @@ export type GetPaymentsByUserQuery = {
   getPaymentsByUser: {
     __typename?: "PaymentPaginationModel";
     pageSize: number;
+    totalCount: number;
+    items: Array<{
+      __typename?: "Subscription";
+      dateOfPayment?: any | null;
+      id: string;
+      endDate?: any | null;
+      price: number;
+      startDate?: any | null;
+      paymentType?: Types.PaymentMethod | null;
+    }>;
   };
 };
 
@@ -31,7 +41,26 @@ export type GetPaymentsQueryVariables = Types.Exact<{
 
 export type GetPaymentsQuery = {
   __typename?: "Query";
-  getPayments: { __typename?: "PaymentsPaginationModel"; pageSize: number };
+  getPayments: {
+    __typename?: "PaymentsPaginationModel";
+    pageSize: number;
+    totalCount: number;
+    items: Array<{
+      __typename?: "SubscriptionPaymentsModel";
+      createdAt?: any | null;
+      id?: number | null;
+      paymentMethod: Types.PaymentMethod;
+      amount?: number | null;
+      endDate?: any | null;
+      userName: string;
+      type: Types.SubscriptionType;
+      avatars?: Array<{
+        __typename?: "Avatar";
+        height?: number | null;
+        url?: string | null;
+      }> | null;
+    }>;
+  };
 };
 
 export const GetPaymentsByUserDocument = gql`
@@ -50,6 +79,15 @@ export const GetPaymentsByUserDocument = gql`
       pageNumber: $pageNumber
     ) {
       pageSize
+      totalCount
+      items {
+        dateOfPayment
+        id
+        endDate
+        price
+        startDate
+        paymentType
+      }
     }
   }
 `;
@@ -145,6 +183,20 @@ export const GetPaymentsDocument = gql`
       searchTerm: $searchTerm
     ) {
       pageSize
+      totalCount
+      items {
+        createdAt
+        id
+        paymentMethod
+        amount
+        endDate
+        userName
+        type
+        avatars {
+          height
+          url
+        }
+      }
     }
   }
 `;

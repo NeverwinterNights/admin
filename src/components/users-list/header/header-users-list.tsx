@@ -3,19 +3,20 @@ import { DebounceInput, Select } from "@/components";
 import { useTranslation } from "@/hooks";
 import s from "./header-users-list.module.scss";
 import { Option } from "@/components/ui/select";
+import { UserBlockStatus } from "@/types";
 
 type Props = {
   setSearch: Dispatch<SetStateAction<string>>;
   selectOptions: Option[];
   search: string;
-  selectValue: string;
-  setSelectValue: Dispatch<SetStateAction<string>>;
+  // selectValue: string;
+  setSelectValue: Dispatch<SetStateAction<UserBlockStatus>>;
 };
 
 export const HeaderUsersList = memo(
   ({
     selectOptions,
-    selectValue,
+    // selectValue,
     setSelectValue,
     search,
     setSearch,
@@ -36,7 +37,7 @@ export const HeaderUsersList = memo(
         <Select
           className={s.sel}
           options={selectOptions}
-          value={selectValue}
+          // value={selectValue}
           onChange={setSelectValue}
           placeholder={t.userList.notSelected}
         />

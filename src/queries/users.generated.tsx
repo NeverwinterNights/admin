@@ -1,93 +1,54 @@
-import * as Types from "../types";
+import * as Types from '../types';
 
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
-
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-
 export type GetUsersQueryVariables = Types.Exact<{
-  pageSize?: Types.InputMaybe<Types.Scalars["Int"]["input"]>;
-  pageNumber?: Types.InputMaybe<Types.Scalars["Int"]["input"]>;
-  sortBy?: Types.InputMaybe<Types.Scalars["String"]["input"]>;
+  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  pageNumber?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  sortBy?: Types.InputMaybe<Types.Scalars['String']['input']>;
   sortDirection?: Types.InputMaybe<Types.SortDirection>;
-  searchTerm?: Types.InputMaybe<Types.Scalars["String"]["input"]>;
+  searchTerm?: Types.InputMaybe<Types.Scalars['String']['input']>;
   statusFilter?: Types.InputMaybe<Types.UserBlockStatus>;
 }>;
 
-export type GetUsersQuery = {
-  __typename?: "Query";
-  getUsers: {
-    __typename?: "UsersPaginationModel";
-    users: Array<{
-      __typename?: "User";
-      id: number;
-      userName: string;
-      createdAt: any;
-      userBan?: {
-        __typename?: "UserBan";
-        createdAt: any;
-        reason: string;
-      } | null;
-    }>;
-    pagination: {
-      __typename?: "PaginationModel";
-      totalCount: number;
-      pagesCount: number;
-    };
-  };
-};
+
+export type GetUsersQuery = { __typename?: 'Query', getUsers: { __typename?: 'UsersPaginationModel', users: Array<{ __typename?: 'User', id: number, userName: string, createdAt: any, userBan?: { __typename?: 'UserBan', createdAt: any, reason: string } | null }>, pagination: { __typename?: 'PaginationModel', totalCount: number, pagesCount: number } } };
 
 export type GetUserQueryVariables = Types.Exact<{
-  userId: Types.Scalars["Int"]["input"];
+  userId: Types.Scalars['Int']['input'];
 }>;
 
-export type GetUserQuery = {
-  __typename?: "Query";
-  getUser: {
-    __typename?: "UserByIdModel";
-    id: number;
-    userName: string;
-    profile: {
-      __typename?: "Profile";
-      createdAt: any;
-      userName?: string | null;
-    };
-  };
-};
+
+export type GetUserQuery = { __typename?: 'Query', getUser: { __typename?: 'User', id: number, userName: string, createdAt: any, email: string, profile: { __typename?: 'Profile', avatars?: Array<{ __typename?: 'Avatar', url?: string | null }> | null } } };
+
 
 export const GetUsersDocument = gql`
-  query GetUsers(
-    $pageSize: Int
-    $pageNumber: Int
-    $sortBy: String
-    $sortDirection: SortDirection
-    $searchTerm: String
-    $statusFilter: UserBlockStatus
+    query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String, $statusFilter: UserBlockStatus) {
+  getUsers(
+    pageSize: $pageSize
+    pageNumber: $pageNumber
+    sortBy: $sortBy
+    sortDirection: $sortDirection
+    searchTerm: $searchTerm
+    statusFilter: $statusFilter
   ) {
-    getUsers(
-      pageSize: $pageSize
-      pageNumber: $pageNumber
-      sortBy: $sortBy
-      sortDirection: $sortDirection
-      searchTerm: $searchTerm
-      statusFilter: $statusFilter
-    ) {
-      users {
-        id
-        userName
-        userBan {
-          createdAt
-          reason
-        }
+    users {
+      id
+      userName
+      userBan {
         createdAt
+        reason
       }
-      pagination {
-        totalCount
-        pagesCount
-      }
+      createdAt
+    }
+    pagination {
+      totalCount
+      pagesCount
     }
   }
-`;
+}
+    `;
 
 /**
  * __useGetUsersQuery__
@@ -110,68 +71,37 @@ export const GetUsersDocument = gql`
  *   },
  * });
  */
-export function useGetUsersQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetUsersQuery, GetUsersQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(
-    GetUsersDocument,
-    options,
-  );
-}
-
-export function useGetUsersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetUsersQuery,
-    GetUsersQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(
-    GetUsersDocument,
-    options,
-  );
-}
-
-export function useGetUsersSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    GetUsersQuery,
-    GetUsersQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useSuspenseQuery<GetUsersQuery, GetUsersQueryVariables>(
-    GetUsersDocument,
-    options,
-  );
-}
-
-export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
-export type GetUsersLazyQueryHookResult = ReturnType<
-  typeof useGetUsersLazyQuery
->;
-export type GetUsersSuspenseQueryHookResult = ReturnType<
-  typeof useGetUsersSuspenseQuery
->;
-export type GetUsersQueryResult = Apollo.QueryResult<
-  GetUsersQuery,
-  GetUsersQueryVariables
->;
-export const GetUserDocument = gql`
-  query GetUser($userId: Int!) {
-    getUser(userId: $userId) {
-      id
-      profile {
-        createdAt
-        userName
+export function useGetUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
       }
-      userName
+export function useGetUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+        }
+export function useGetUsersSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+        }
+export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
+export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
+export type GetUsersSuspenseQueryHookResult = ReturnType<typeof useGetUsersSuspenseQuery>;
+export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export const GetUserDocument = gql`
+    query GetUser($userId: Int!) {
+  getUser(userId: $userId) {
+    id
+    userName
+    createdAt
+    email
+    profile {
+      avatars {
+        url
+      }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useGetUserQuery__
@@ -189,51 +119,19 @@ export const GetUserDocument = gql`
  *   },
  * });
  */
-export function useGetUserQuery(
-  baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(
-    GetUserDocument,
-    options,
-  );
-}
-
-export function useGetUserLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetUserQuery,
-    GetUserQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(
-    GetUserDocument,
-    options,
-  );
-}
-
-export function useGetUserSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    GetUserQuery,
-    GetUserQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(
-    GetUserDocument,
-    options,
-  );
-}
-
+export function useGetUserQuery(baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+      }
+export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export function useGetUserSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
-export type GetUserSuspenseQueryHookResult = ReturnType<
-  typeof useGetUserSuspenseQuery
->;
-export type GetUserQueryResult = Apollo.QueryResult<
-  GetUserQuery,
-  GetUserQueryVariables
->;
+export type GetUserSuspenseQueryHookResult = ReturnType<typeof useGetUserSuspenseQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
