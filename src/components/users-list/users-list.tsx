@@ -63,6 +63,7 @@ export const UsersList = () => {
 
   const debouncedValue = useDebounce<string>(search, 800);
 
+  console.log("value");
   useEffect(() => {
     setSearchTerm(debouncedValue);
   }, [debouncedValue, setSearchTerm]);
