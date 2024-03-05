@@ -49,7 +49,7 @@ export const TableHeadCell = forwardRef<
   const classNames = {
     headCell: clsx(className, s.headCell),
   };
-
+console.log ("value")
   return (
     <th className={classNames.headCell} {...rest} ref={ref}>
       <span>{children}</span>
