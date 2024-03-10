@@ -6,6 +6,7 @@ import { Avatar, Button, Loader, Tabs, Typography } from "@/components";
 import { useRouter } from "next/router";
 import { useGetUserQuery } from "@/queries/users.generated";
 import { Payments, UploadedPhotos } from "@/components/user/components";
+import { format } from "date-fns";
 
 export const UserComponent = () => {
   const { t } = useTranslation();
@@ -103,9 +104,11 @@ export const UserComponent = () => {
             <Typography className={s.dataSub} variant="regular_text_14">
               {t.user.profileCreationDate}
             </Typography>
-            {/*<Typography variant="regular_text_16">*/}
-            {/*  {format(new Date(data?.getUser.createdAt), "dd.MM.yyyy")}*/}
-            {/*</Typography>*/}
+            <Typography variant="regular_text_16">
+              <div>
+                {format(new Date(data?.getUser.createdAt), "dd.MM.yyyy")}
+              </div>
+            </Typography>
           </div>
         </div>
       </div>
