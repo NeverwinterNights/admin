@@ -6,7 +6,6 @@ import { Avatar, Button, Loader, Tabs, Typography } from "@/components";
 import { useRouter } from "next/router";
 import { useGetUserQuery } from "@/queries/users.generated";
 import { Payments, UploadedPhotos } from "@/components/user/components";
-import { format } from "date-fns";
 
 export const UserComponent = () => {
   const { t } = useTranslation();
@@ -33,7 +32,7 @@ export const UserComponent = () => {
       disabled: false,
     },
   ];
-  const { query, back } = useRouter();
+  const { query, locale, back } = useRouter();
 
   const { data, loading } = useGetUserQuery({
     variables: {
@@ -69,6 +68,25 @@ export const UserComponent = () => {
     'format(new Date(data?.getUser.createdAt), "dd.MM.yyyy")',
     data?.getUser.createdAt,
   );
+
+  const getNumericDayMonthTime = (
+    dateString: number | string,
+    locale: string,
+    addDay: boolean = false,
+  ) => {
+    const date = new Date(dateString);
+
+    if (addDay) {
+      date.setDate(date.getDate() + 1);
+    }
+    const options = {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+    } as const;
+
+    return date.toLocaleDateString(locale, options);
+  };
 
   return (
     <div className={s.root}>
@@ -109,7 +127,12 @@ export const UserComponent = () => {
               {t.user.profileCreationDate}
             </Typography>
             <Typography variant="regular_text_16">
-              {format(new Date(data?.getUser.createdAt), "dd.MM.yyyy")}
+              {/*{format(new Date(data?.getUser.createdAt), "dd.MM.yyyy")}*/}
+              {getNumericDayMonthTime(
+                data?.getUser.createdAt,
+                locale as string,
+                true,
+              )}
             </Typography>
           </div>
         </div>
