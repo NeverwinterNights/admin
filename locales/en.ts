@@ -66,7 +66,7 @@ export const en: LocaleType = {
     notBlocked: "Not Blocked",
     notSelected: "Not selected",
     search: "Search",
-    userID: "UserComponent ID",
+    userID: "User ID",
     username: "Username",
     profileLink: "Profile link",
     dateAdded: "Date added",
@@ -84,7 +84,7 @@ export const en: LocaleType = {
     perPage: "per page",
   },
   dropdown: {
-    delete: "Delete UserComponent",
+    delete: "Delete user",
     ban: "Ban in the system",
     more: "More Information",
     unBan: "Unban",

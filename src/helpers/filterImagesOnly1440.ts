@@ -1,4 +1,4 @@
-type PostImageType = {
+export type PostImageType = {
   url: string;
   width: number;
   height: number;

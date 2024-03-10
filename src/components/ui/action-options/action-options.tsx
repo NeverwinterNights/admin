@@ -25,6 +25,7 @@ export const ActionOptions = ({
   return (
     <>
       <DropdownRadixMenu.Item className={s.item} onClick={handleDeleteMode}>
+        {/* todo вынести  DropdownRadixMenu.Item в компоненту*/}
         <DeleteIcon />
         <Typography variant="regular_text_14">{t.dropdown.delete}</Typography>
       </DropdownRadixMenu.Item>

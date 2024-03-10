@@ -81,14 +81,16 @@ export const Pagination = ({
       {showPerPageSelect && (
         <div className={s.selectBox}>
           {t.pagination.show}
-          <Select
-            value={perPage}
-            onChange={onPerPageChange}
-            options={perPageOptions?.map((el) => ({
-              label: `${el}`,
-              value: `${el}`,
-            }))}
-          />
+          <div className={s.selectWrap}>
+            <Select
+              value={perPage}
+              onChange={onPerPageChange}
+              options={perPageOptions?.map((el) => ({
+                label: `${el}`,
+                value: `${el}`,
+              }))}
+            />
+          </div>
           {t.pagination.perPage}
         </div>
       )}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import s from "./payments-component.module.scss";
-import { Checkbox, DebounceInput, Loader, Pagination } from "@/components";
+import { DebounceInput, Loader, Pagination } from "@/components";
 import { useDebounce, useTranslation } from "@/hooks";
 import { PaymentsTables } from "@/components/payments/payments-table.tsx";
 import { useGetPaymentsQuery } from "@/queries/payments.generated";
@@ -44,26 +44,19 @@ export const PaymentsComponent = () => {
     setSearch("");
   };
 
-  if (loading) {
+  if (loading || !data) {
     return <Loader />;
   }
 
   return (
     <div className={s.root}>
-      <div className={s.checkbox}>
-        <Checkbox
-          label={t.payments.autoupdate}
-          checked={checked}
-          onChange={onChange}
-        />
-      </div>
       <DebounceInput
         className={s.input}
         onValueChange={setSearch}
         searchValue={search}
         onClickClearInput={handleClearSearch}
       />
-      <PaymentsTables sort={sort} setSort={setSort} payments={data!} />
+      <PaymentsTables sort={sort} setSort={setSort} payments={data} />
       <div className={s.pagination}>
         {data?.getPayments.totalCount! >= +perPage && (
           <Pagination

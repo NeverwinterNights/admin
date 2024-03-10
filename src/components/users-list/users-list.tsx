@@ -63,7 +63,6 @@ export const UsersList = () => {
 
   const debouncedValue = useDebounce<string>(search, 800);
 
-  console.log("value");
   useEffect(() => {
     setSearchTerm(debouncedValue);
   }, [debouncedValue, setSearchTerm]);
@@ -115,6 +114,7 @@ export const UsersList = () => {
     });
     setIsModalDeleteOpen(false);
     setActiveModalData({} as BanModalData);
+    refetch();
   };
   const banOpenModalHandler = (name: string, id: number, ban?: boolean) => {
     setActiveModalData({ name, id: id.toString(), ban });
@@ -130,68 +130,76 @@ export const UsersList = () => {
     return <Loader />;
   }
 
+  // if (error) {
+  //   return <div>error</div>;
+  // }
+
   return (
     <>
-      <Modal
-        title={t.userList.banUser}
-        onOpenChange={() => setIsModalOpen(false)}
-        isOpen={isModalOpen}
-        className={s.banModal}
-      >
-        <BanModal
-          onCancelClick={() => setIsModalOpen(false)}
-          name={activeModalData.name}
-          onClick={onclickModalHandler()}
-          banned={!!activeModalData.ban}
-        />
-      </Modal>
-      <Modal
-        title={t.deleteModal.deleteUser}
-        onOpenChange={() => setIsModalDeleteOpen(false)}
-        isOpen={isModalDeleteOpen}
-        className={s.banModal}
-      >
-        <DeleteUserModal
-          onCancelClick={() => setIsModalDeleteOpen(false)}
-          name={activeModalData.name}
-          onClick={deleteUserHandler}
-        />
-      </Modal>
-      <div className={s.root}>
-        <HeaderUsersList
-          setSearch={setSearch}
-          selectOptions={selectOptions}
-          search={search}
-          setSelectValue={setSelectValue}
-        />
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            <UserListTables
-              sort={sort}
-              setSort={setSort}
-              banOpenModalHandler={banOpenModalHandler}
-              users={data?.getUsers.users ? data.getUsers.users : []}
-              deleteOpenModalHandler={deleteOpenModalHandler}
+      {!!data && (
+        <>
+          <Modal
+            title={t.userList.banUser}
+            onOpenChange={() => setIsModalOpen(false)}
+            isOpen={isModalOpen}
+            className={s.banModal}
+          >
+            <BanModal
+              onCancelClick={() => setIsModalOpen(false)}
+              name={activeModalData.name}
+              onClick={onclickModalHandler()}
+              banned={!!activeModalData.ban}
             />
-            <div className={s.pagination}>
-              {data?.getUsers.pagination.totalCount! >= +perPage && (
-                <Pagination
-                  perPage={perPage}
-                  count={Math.ceil(
-                    data?.getUsers.pagination.totalCount! / +perPage,
-                  )}
-                  page={page}
-                  onPerPageChange={setPerPage}
-                  perPageOptions={[5, 10, 12, 100]}
-                  onChange={setPage}
+          </Modal>
+          <Modal
+            title={t.deleteModal.deleteUser}
+            onOpenChange={() => setIsModalDeleteOpen(false)}
+            isOpen={isModalDeleteOpen}
+            className={s.banModal}
+          >
+            <DeleteUserModal
+              onCancelClick={() => setIsModalDeleteOpen(false)}
+              name={activeModalData.name}
+              onClick={deleteUserHandler}
+            />
+          </Modal>
+          <div className={s.root}>
+            <HeaderUsersList
+              setSearch={setSearch}
+              selectOptions={selectOptions}
+              search={search}
+              setSelectValue={setSelectValue}
+            />
+            {loading ? (
+              <Loader />
+            ) : (
+              <>
+                <UserListTables
+                  sort={sort}
+                  setSort={setSort}
+                  banOpenModalHandler={banOpenModalHandler}
+                  users={data.getUsers.users ? data.getUsers.users : []}
+                  deleteOpenModalHandler={deleteOpenModalHandler}
                 />
-              )}
-            </div>
-          </>
-        )}
-      </div>
+                <div className={s.pagination}>
+                  {data.getUsers.pagination.totalCount >= +perPage && (
+                    <Pagination
+                      perPage={perPage}
+                      count={Math.ceil(
+                        data?.getUsers.pagination.totalCount / +perPage,
+                      )}
+                      page={page}
+                      onPerPageChange={setPerPage}
+                      perPageOptions={[5, 10, 12, 100]}
+                      onChange={setPage}
+                    />
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </>
+      )}
     </>
   );
 };

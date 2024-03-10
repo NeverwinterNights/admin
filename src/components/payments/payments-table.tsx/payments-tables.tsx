@@ -13,11 +13,7 @@ import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { useTranslation } from "@/hooks";
 import { GetPaymentsQuery } from "@/queries/payments.generated";
-
-// type ItemsPaymentType = GetPaymentsQuery["getPayments"]["items"];
-// const abc: ItemsPaymentType = {
-//   id: 12,
-// };
+import { Avatar } from "@/components";
 
 type Props = {
   payments: GetPaymentsQuery;
@@ -50,16 +46,23 @@ export const PaymentsTables = memo(({ payments, sort, setSort }: Props) => {
         {payments.getPayments.items.map((item) => {
           return (
             <TableRow key={item.id}>
-              <TableCell>{item.userName}</TableCell>
               <TableCell>
-                <div>{format(new Date(item.createdAt), "dd.MM.yyyy")}</div>
+                <div
+                  style={{ display: "flex", gap: "8px", alignItems: "center" }}
+                >
+                  <Avatar size={36} photo={item.avatars?.[0]?.url || ""} />
+                  {item.userName}
+                </div>
               </TableCell>
-              <TableCell>{item.amount}</TableCell>
-              <TableCell>{value[item.type]}</TableCell>
               <TableCell>
-                {item.paymentMethod === "STRIPE"
-                  ? t.payments.stripe
-                  : t.payments.payPal}
+                <div className={s.tableCell}>
+                  {format(new Date(item.createdAt), "dd.MM.yyyy")}
+                </div>
+              </TableCell>
+              <TableCell className={s.tableCell}>{item.amount}</TableCell>
+              <TableCell className={s.tableCell}>{value[item.type]}</TableCell>
+              <TableCell className={s.tableCell}>
+                {item.paymentMethod === "STRIPE" ? "Stripe" : "PayPal"}
               </TableCell>
             </TableRow>
           );

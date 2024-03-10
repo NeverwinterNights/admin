@@ -19,6 +19,7 @@ export const GET_POSTS = gql`
       totalCount
       pagesCount
       items {
+        ownerId
         id
         createdAt
         description
