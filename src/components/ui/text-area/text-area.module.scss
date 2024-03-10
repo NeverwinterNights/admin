@@ -58,10 +58,14 @@
 
 .label {
   user-select: none;
-  color: var(--light-900) !important; // переменной с таким цветом нет в палитре цветов
+  color: var(
+    --light-900
+  ) !important; // переменной с таким цветом нет в палитре цветов
 
   &.disabled {
-    color: var(--dark-100) !important; // переменной с таким цветом нет в палитре цветов
+    color: var(
+      --dark-100
+    ) !important; // переменной с таким цветом нет в палитре цветов
   }
 }
 
