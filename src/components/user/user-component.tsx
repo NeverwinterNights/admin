@@ -65,6 +65,10 @@ export const UserComponent = () => {
   if (loading) {
     return <Loader />;
   }
+  console.log(
+    'format(new Date(data?.getUser.createdAt), "dd.MM.yyyy")',
+    data?.getUser.createdAt,
+  );
 
   return (
     <div className={s.root}>
@@ -105,9 +109,7 @@ export const UserComponent = () => {
               {t.user.profileCreationDate}
             </Typography>
             <Typography variant="regular_text_16">
-              <div>
-                {format(new Date(data?.getUser.createdAt), "dd.MM.yyyy")}
-              </div>
+              {format(new Date(data?.getUser.createdAt), "dd.MM.yyyy")}
             </Typography>
           </div>
         </div>
