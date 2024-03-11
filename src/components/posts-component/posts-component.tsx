@@ -118,7 +118,6 @@ export const PostsComponent = () => {
         >
           {mappedPosts}
         </InfiniteScroll>
-        // </div>
       )}
     </div>
   );
