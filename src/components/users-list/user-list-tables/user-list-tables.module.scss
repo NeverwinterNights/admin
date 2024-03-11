@@ -1,9 +1,5 @@
 .table {
   margin-bottom: 25px;
-
-  //& th {
-  //  background-color: #990f2b;
-  //}
 }
 
 .banedId {
@@ -12,8 +8,8 @@
 }
 
 .link {
-  text-decoration: none;
   font-weight: 600;
+  text-decoration: none;
 
   &:hover {
     color: var(--primary-100);

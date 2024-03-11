@@ -48,6 +48,7 @@ export const ru = {
     usernameExists: "Пользователь с таким именем уже существует",
     whereAreYouLive: "Укажите в каком городе вы живете",
     maxLengthPost: "Максимальное количество символов для поста равно 500",
+    ban: "Укажите причину блокировки",
   },
   auth: {
     signIn: "Войти",
@@ -58,7 +59,7 @@ export const ru = {
   sidebars: {
     users: "Пользователи",
     statistics: "Статистика",
-    payments: "Список платежей",
+    payments: "Платежи",
     posts: "Список постов",
   },
   userList: {
@@ -75,6 +76,9 @@ export const ru = {
     areYouBanUser(name: string) {
       return `Вы уверенны, что хотите забанить пользователя <1>${name}?</1>`;
     },
+    areYouUnBanUser(name: string) {
+      return `Вы уверенны, что хотите разбанить пользователя <1>${name}?</1>`;
+    },
   },
   pagination: {
     show: "показать",
@@ -87,6 +91,7 @@ export const ru = {
     delete: "Удалить",
     ban: "Заблокировать",
     more: "Больше информации",
+    unBan: "Разбанить",
   },
   banModal: {
     reasonForBan: "Причина блокировки",
@@ -99,6 +104,44 @@ export const ru = {
   },
   user: {
     backToUsersList: "Назад к списку пользователей",
+    userID: "Номер пользователя",
+    profileCreationDate: "Дата регистрации",
+    uploadedPhotos: "Загруженные фотографии",
+    payments: "Платежи",
+    followers: "Подписчики",
+    following: "Читатели",
+    dateOfPayment: "Дата платежа",
+    endDateOfSubscription: "Дата завершения подписки",
+    amount: "Сумма $",
+    subscriptionType: "Тип подписки",
+    paymentType: "Тип платежа",
+  },
+  data: {
+    lessMinuteAgo: "Меньше минуты назад",
+    minute: "минуту",
+    minutes: "минуты",
+    minuteU: "минуту",
+    minuteB: "минуты",
+    minut: "минут",
+    ago: "назад",
+    hour: "час",
+    hoursA: "часа",
+    hours21: "час",
+    hours: "часов",
+    day: "день",
+    days2: "дня",
+    days: "дней",
+    more2Weeks: "Более двух недель назад",
+  },
+  payments: {
+    autoupdate: "Автообновление",
+    subscription: "Подписка",
+    paymentMethod: "Метод платежа",
+    stripe: "Страйп",
+    payPal: "ПэйПал",
+    monthly: "Месячная",
+    day: "Дневная",
+    weekly: "Недельная",
   },
 };
 

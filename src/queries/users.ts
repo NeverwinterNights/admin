@@ -38,11 +38,14 @@ export const GET_USER = gql`
   query GetUser($userId: Int!) {
     getUser(userId: $userId) {
       id
-      profile {
-        createdAt
-        userName
-      }
       userName
+      createdAt
+      email
+      profile {
+        avatars {
+          url
+        }
+      }
     }
   }
 `;

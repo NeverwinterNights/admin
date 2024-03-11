@@ -1,7 +1,7 @@
 import * as Types from "../types";
 
-import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
+import { gql } from "@apollo/client";
 
 const defaultOptions = {} as const;
 
@@ -15,7 +15,33 @@ export type GetPostsQueryVariables = Types.Exact<{
 
 export type GetPostsQuery = {
   __typename?: "Query";
-  getPosts: { __typename?: "PostsPaginationModel"; pageSize: number };
+  getPosts: {
+    __typename?: "PostsPaginationModel";
+    pageSize: number;
+    totalCount: number;
+    pagesCount: number;
+    items: Array<{
+      __typename?: "Post";
+      ownerId: number;
+      id: number;
+      createdAt: any;
+      description: string;
+      images?: Array<{
+        __typename?: "ImagePost";
+        url?: string | null;
+        height?: number | null;
+        fileSize?: number | null;
+        width?: number | null;
+        id?: number | null;
+      }> | null;
+      postOwner: {
+        __typename?: "PostOwnerModel";
+        id: number;
+        userName: string;
+        avatars?: Array<{ __typename?: "Avatar"; url?: string | null }> | null;
+      };
+    }>;
+  };
 };
 
 export type GetPostsByUserQueryVariables = Types.Exact<{
@@ -25,7 +51,17 @@ export type GetPostsByUserQueryVariables = Types.Exact<{
 
 export type GetPostsByUserQuery = {
   __typename?: "Query";
-  getPostsByUser: { __typename?: "PostsByUserModel"; pageSize: number };
+  getPostsByUser: {
+    __typename?: "PostsByUserModel";
+    pageSize: number;
+    pagesCount: number;
+    totalCount: number;
+    items?: Array<{
+      __typename?: "ImagePost";
+      url?: string | null;
+      id?: number | null;
+    }> | null;
+  };
 };
 
 export const GetPostsDocument = gql`
@@ -44,6 +80,28 @@ export const GetPostsDocument = gql`
       endCursorPostId: $endCursorPostId
     ) {
       pageSize
+      totalCount
+      pagesCount
+      items {
+        ownerId
+        id
+        createdAt
+        description
+        images {
+          url
+          height
+          fileSize
+          width
+          id
+        }
+        postOwner {
+          id
+          avatars {
+            url
+          }
+          userName
+        }
+      }
     }
   }
 `;
@@ -122,6 +180,13 @@ export const GetPostsByUserDocument = gql`
   query GetPostsByUser($userId: Int!, $endCursorId: Int) {
     getPostsByUser(userId: $userId, endCursorId: $endCursorId) {
       pageSize
+      pagesCount
+      pageSize
+      totalCount
+      items {
+        url
+        id
+      }
     }
   }
 `;

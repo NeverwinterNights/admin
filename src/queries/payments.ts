@@ -16,6 +16,15 @@ export const GET_PAYMENTS_BY_USER = gql`
       pageNumber: $pageNumber
     ) {
       pageSize
+      totalCount
+      items {
+        dateOfPayment
+        id
+        endDate
+        price
+        startDate
+        paymentType
+      }
     }
   }
 `;
@@ -36,6 +45,20 @@ export const GET_PAYMENTS = gql`
       searchTerm: $searchTerm
     ) {
       pageSize
+      totalCount
+      items {
+        createdAt
+        id
+        paymentMethod
+        amount
+        endDate
+        userName
+        type
+        avatars {
+          height
+          url
+        }
+      }
     }
   }
 `;

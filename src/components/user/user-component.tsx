@@ -1,18 +1,151 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "@/hooks";
 import { ArrowBack } from "@/assets/icons";
 import s from "./user-component.module.scss";
-import { Button } from "@/components";
+import { Avatar, Button, Loader, Tabs, Typography } from "@/components";
+import { useRouter } from "next/router";
+import { useGetUserQuery } from "@/queries/users.generated";
+import { Payments, UploadedPhotos } from "@/components/user/components";
+import { format } from "date-fns";
 
 export const UserComponent = () => {
   const { t } = useTranslation();
 
+  const tabsData = [
+    {
+      label: t.user.uploadedPhotos,
+      value: t.user.uploadedPhotos,
+      disabled: false,
+    },
+    {
+      label: t.user.payments,
+      value: t.user.payments,
+      disabled: false,
+    },
+    {
+      label: t.user.followers,
+      value: t.user.followers,
+      disabled: false,
+    },
+    {
+      label: t.user.following,
+      value: t.user.following,
+      disabled: false,
+    },
+  ];
+  const { query, locale, back } = useRouter();
+
+  const { data, loading } = useGetUserQuery({
+    variables: {
+      userId: +query.id!,
+    },
+    skip: !query.id,
+  });
+
+  const [tabValue, setTabValue] = useState(tabsData[0].value);
+
+  const getActivePage = useCallback(() => {
+    if (tabValue === t.user.uploadedPhotos) {
+      return <UploadedPhotos />;
+    } else if (tabValue === t.user.payments) {
+      return <Payments />;
+    } else if (tabValue === t.user.followers) {
+      return <div>Followers</div>;
+    } else if (tabValue === t.user.following) {
+      return <div>Following</div>;
+    }
+  }, [
+    t.user.followers,
+    t.user.following,
+    t.user.payments,
+    t.user.uploadedPhotos,
+    tabValue,
+  ]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  const getNumericDayMonthTime = (
+    dateString: number | string,
+    locale: string,
+    addDay: boolean = false,
+  ) => {
+    const date = new Date(dateString);
+
+    if (addDay) {
+      date.setDate(date.getDate() + 1);
+    }
+    const options = {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+    } as const;
+
+    return date.toLocaleDateString(locale, options);
+  };
+
   return (
-    <div className={s.root}>
-      <Button variant={"link"} className={s.header}>
-        <ArrowBack className={s.backIcon} />
-        {t.user.backToUsersList}
-      </Button>
-    </div>
+    <>
+      {!!data && (
+        <div className={s.root}>
+          <Button variant={"link"} onClick={() => back()} className={s.header}>
+            <ArrowBack className={s.backIcon} />
+            {t.user.backToUsersList}
+          </Button>
+          <div className={s.main}>
+            <div className={s.mainInfo}>
+              <Avatar
+                size={60}
+                photo={data?.getUser?.profile?.avatars?.[0]?.url!}
+                className={s.image}
+              />
+              <div className={s.info}>
+                <Typography variant={"h1"}>{data?.getUser.userName}</Typography>
+                <Typography
+                  as="a"
+                  href={`${process.env.NEXT_PUBLIC_LINK}/profile?id=${data?.getUser.id}`}
+                  className={s.nickname}
+                  variant={"regular_text_14"}
+                >
+                  {data?.getUser.userName}
+                </Typography>
+              </div>
+            </div>
+            <div className={s.data}>
+              <div className={s.item}>
+                <Typography className={s.dataSub} variant="regular_text_14">
+                  {t.user.userID}
+                </Typography>
+                <Typography variant="regular_text_16">
+                  {data?.getUser.id}
+                </Typography>
+              </div>
+              <div className={s.item}>
+                <Typography className={s.dataSub} variant="regular_text_14">
+                  {t.user.profileCreationDate}
+                </Typography>
+                <Typography variant="regular_text_16">
+                  {format(new Date(data?.getUser.createdAt), "dd.MM.yyyy")}
+                  {/*{format(new Date("2024-03-11T22:27:03.335Z"), "dd.MM.yyyy")}*/}
+                  {/*{getNumericDayMonthTime(*/}
+                  {/*  data?.getUser.createdAt,*/}
+                  {/*  locale as string,*/}
+                  {/*  true,*/}
+                  {/*)}*/}
+                </Typography>
+              </div>
+            </div>
+          </div>
+          <Tabs
+            defaultValue={tabsData[0].value}
+            className={s.tabs}
+            tabs={tabsData}
+            onValueChange={(value) => setTabValue(value)}
+          />
+          {getActivePage()}
+        </div>
+      )}
+    </>
   );
 };

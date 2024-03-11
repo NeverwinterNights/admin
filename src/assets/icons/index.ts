@@ -14,3 +14,7 @@ export { DeleteIcon } from "./delete-icon";
 export { ClosedInputIcon } from "./close-input-icon";
 export { CloseModal } from "./close-modal-icon";
 export { ArrowBack } from "./arrow-back";
+export { ImageOutline } from "./image-outline";
+export { UnBanIcon } from "./un-ban";
+export { Block } from "./block";
+export { Check } from "./check";

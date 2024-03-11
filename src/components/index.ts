@@ -21,6 +21,15 @@ export { ActionOptions } from "./ui/action-options";
 export { DebounceInput } from "./debounce-input";
 export { usePagination } from "./ui/pagination/use-pagination";
 export { Modal } from "./ui/modal";
+export { Avatar } from "./ui/avatar";
+export { HeaderUsersList } from "./users-list/header";
+export { Tabs } from "./ui/tabs";
+export { SamplePrevArrow, SampleNextArrow } from "./ui/slider-arrows";
+export { TextArea } from "./ui/text-area";
+export { Checkbox } from "./ui/checkbox";
+export { PostsComponent } from "./posts-component";
+export { PaymentsComponent } from "./payments";
+export type { TextAreaProps } from "./ui/text-area";
 export { getHeaderLayout, getSidebarLayout, getMainLayout } from "./layouts";
 
 export type { InputPropsType } from "./ui/text-field";

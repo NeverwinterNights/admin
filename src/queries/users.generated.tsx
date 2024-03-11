@@ -1,7 +1,7 @@
 import * as Types from "../types";
 
-import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
+import { gql } from "@apollo/client";
 
 const defaultOptions = {} as const;
 
@@ -44,13 +44,14 @@ export type GetUserQueryVariables = Types.Exact<{
 export type GetUserQuery = {
   __typename?: "Query";
   getUser: {
-    __typename?: "UserByIdModel";
+    __typename?: "User";
     id: number;
     userName: string;
+    createdAt: any;
+    email: string;
     profile: {
       __typename?: "Profile";
-      createdAt: any;
-      userName?: string | null;
+      avatars?: Array<{ __typename?: "Avatar"; url?: string | null }> | null;
     };
   };
 };
@@ -164,11 +165,14 @@ export const GetUserDocument = gql`
   query GetUser($userId: Int!) {
     getUser(userId: $userId) {
       id
-      profile {
-        createdAt
-        userName
-      }
       userName
+      createdAt
+      email
+      profile {
+        avatars {
+          url
+        }
+      }
     }
   }
 `;

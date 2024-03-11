@@ -15,8 +15,8 @@ export type Option = { label: string | ReactElement; value: string };
 
 type ConditionalMultipleProps = {
   multiple?: true;
-  value: string | ReactElement;
-  onChange: (value: string) => void;
+  value?: string | ReactElement;
+  onChange: (value: any) => void;
 };
 
 type CommonProps = {

@@ -1,13 +1,17 @@
 .root {
-  max-width: 972px;
   width: 100%;
+  max-width: 972px;
   padding-top: 24px;
 }
 
 .header {
   display: flex;
   align-items: center;
+
+  margin-bottom: 24px;
+
   color: var(--light-100);
+
   transition: all 0.3s ease 0s;
 
   &:hover {
@@ -19,4 +23,37 @@
   &:hover {
     color: var(--light-900);
   }
+}
+
+.mainInfo {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.image {
+  margin-right: 24px;
+}
+
+.nickname {
+  text-decoration: underline;
+}
+
+.dataSub {
+  color: var(--light-900);
+}
+
+.data {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 29px;
+}
+
+.item {
+  width: 172px;
+  height: 48px;
+}
+
+.tabs {
+  width: 100%;
+  margin-bottom: 35px;
 }

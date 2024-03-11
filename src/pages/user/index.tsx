@@ -5,7 +5,7 @@ import { UserComponent } from "@/components/user";
 const User = () => {
   return (
     <main className={s.root}>
-      <HeadMeta title="UserComponent" />
+      <HeadMeta title="User" />
       <UserComponent />
     </main>
   );

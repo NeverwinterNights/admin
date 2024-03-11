@@ -47,6 +47,7 @@ export const en: LocaleType = {
     usernameExists: "UserComponent with this username is already registered",
     whereAreYouLive: "Please indicate which city you live in",
     maxLengthPost: "Max number of characters 500",
+    ban: "Specify the reason for blocking",
   },
   auth: {
     signIn: "Sign In",
@@ -65,7 +66,7 @@ export const en: LocaleType = {
     notBlocked: "Not Blocked",
     notSelected: "Not selected",
     search: "Search",
-    userID: "UserComponent ID",
+    userID: "User ID",
     username: "Username",
     profileLink: "Profile link",
     dateAdded: "Date added",
@@ -74,15 +75,19 @@ export const en: LocaleType = {
     areYouBanUser(name: string) {
       return `Are you sure to ban this user, <1>${name}?</1>`;
     },
+    areYouUnBanUser(name: string) {
+      return `Are you sure to unban this user, <1>${name}?</1>`;
+    },
   },
   pagination: {
     show: "show",
     perPage: "per page",
   },
   dropdown: {
-    delete: "Delete UserComponent",
+    delete: "Delete user",
     ban: "Ban in the system",
     more: "More Information",
+    unBan: "Unban",
   },
   components: {
     selectPlaceholder: "Select Box",
@@ -98,5 +103,43 @@ export const en: LocaleType = {
   },
   user: {
     backToUsersList: "Back to Users List",
+    userID: "UserID",
+    profileCreationDate: "Profile Creation Date",
+    uploadedPhotos: "Uploaded photos",
+    payments: "Payments",
+    followers: "Followers",
+    following: "Following",
+    dateOfPayment: "Date of Payment",
+    endDateOfSubscription: "End date of subscription",
+    amount: "Amount, $",
+    subscriptionType: "Subscription Type",
+    paymentType: "Payment Type",
+  },
+  data: {
+    lessMinuteAgo: "Less than a minute ago",
+    minute: "minute",
+    minutes: "minutes",
+    minuteU: "minutes",
+    minuteB: "minutes",
+    minut: "minutes",
+    hour: "hour",
+    hoursA: "hours",
+    hours21: "hours",
+    hours: "hours",
+    ago: "ago",
+    day: "day",
+    days2: "days",
+    days: "days",
+    more2Weeks: "More than 2 weeks ago",
+  },
+  payments: {
+    autoupdate: "Autoupdate",
+    subscription: "Subscription",
+    paymentMethod: "Payment Method",
+    monthly: "MONTHLY",
+    day: "DAY",
+    weekly: "WEEKLY",
+    stripe: "Stripe",
+    payPal: "PayPal",
   },
 };

@@ -1,5 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import type { AppProps } from "next/app";
+import "@/styles/slider.css";
 
 import "@/styles/index.scss";
 import { client } from "@/config/apollo-client";

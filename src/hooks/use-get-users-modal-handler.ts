@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-type BanModalData = {
+export type BanModalData = {
   id: string;
   name: string;
+  ban?: boolean;
 };
 export const useGetUsersModalHandler = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
